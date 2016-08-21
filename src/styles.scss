@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+// Imports
+// @import '~normalize.css';
+@import '~foundation-sites/scss/foundation';
+@include foundation-everything(true);
+
+// Shared styles
+@import 'shared/styles/shared';

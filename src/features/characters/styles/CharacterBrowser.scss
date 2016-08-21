@@ -1,0 +1,18 @@
+
+.CharacterBrowser {
+	$block: &;
+
+	&__loader {
+		visibility: hidden;
+		text-align: center;
+	}
+
+	&__list {}
+
+	&.is-loading {
+		#{$block}__loader {
+			visibility: visible;
+		}
+	}
+
+}
