@@ -1,27 +1,22 @@
 // Import CSS
-import '../styles/CharacterBrowser.scss'
+import '../styles/CharacterListContainer.scss';
 
 // Import JS
-import React, { createClass } from 'react'
-import { Link } from 'react-router'
-import { MARVEL_PUBLIC_KEY } from 'config/config'
-import classNames from 'classnames'
-import { getJSON } from 'shared/utils/XHR'
-import ImagePreloader from 'shared/utils/ImagePreloader'
-import FilterList from './FilterList'
-import CharacterList from './CharacterList'
-import CharacterCard from './CharacterCard'
-import LoadingIcon from './LoadingIcon'
+import React, { createClass } from 'react';
+import { Link } from 'react-router';
+import classNames from 'classnames';
+import ImagePreloader from 'shared/utils/ImagePreloader';
+import FilterList from '../components/FilterList';
+import CharacterList from '../components/CharacterList';
+import CharacterCard from '../components/CharacterCard';
+import LoadingIcon from '../components/LoadingIcon';
 
-
-const BASE_URL = 'https://gateway.marvel.com/v1/public/characters'
+import { getCharacters } from '../api/Characters';
 
 /**
- * CharacterBrowser
+ * CharacterListContainer
  */
-const CharacterBrowser = createClass({
-
-  // displayName: 'Character Browser',
+const CharacterListContainer = createClass({
 
 	getDefaultProps() {
 		return {}
@@ -36,15 +31,12 @@ const CharacterBrowser = createClass({
 	},
 
 	componentDidMount() {
-		const url = `${BASE_URL}?orderBy=name&apikey=${MARVEL_PUBLIC_KEY}`
-		getJSON(url)
+		getCharacters()
 			.then(this.onDataLoaded)
 			.catch(this.onDataError)
 	},
 
 	onFilterClick(value) {
-		const url = `${BASE_URL}?nameStartsWith=${value}&orderBy=name&apikey=${MARVEL_PUBLIC_KEY}`
-
 		// Set status to loading and clear the data
 		this.setState({
 			status: 'LOADING',
@@ -52,13 +44,13 @@ const CharacterBrowser = createClass({
 		})
 
 		// Request the resource
-		getJSON(url)
+		getCharacters({ nameStartsWith: value })
 			.then(this.onDataLoaded)
-			.catch(this.onDataError)
+			.catch(this.onDataError);
 	},
 
 	onDataLoaded(response) {
-		const { attributionText, data } = response
+		const { attributionText, data } = response;
 
 		// Create a preloader and queue each image
 		const ip = new ImagePreloader()
@@ -142,4 +134,4 @@ const CharacterBrowser = createClass({
 
 })
 
-export default CharacterBrowser
+export default CharacterListContainer

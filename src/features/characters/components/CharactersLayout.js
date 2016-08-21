@@ -1,12 +1,12 @@
 // Import JS
 import React from 'react';
-import CharacterBrowser from './CharacterBrowser';
+import CharacterListContainer from '../containers/CharacterListContainer';
 
 const CharactersLayout = () => (
 	<section className="CharactersLayout">
     <div className="container">
   		<h1>Marvel Characters</h1>
-  		<CharacterBrowser/>
+  		<CharacterListContainer/>
     </div>
 	</section>
 );
