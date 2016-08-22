@@ -3,31 +3,26 @@ import '../styles/CharacterList.scss';
 
 // Import JS
 import React, { PropTypes } from 'react';
-import CharacterListItem from './CharacterListItem';
+import { Link } from 'react-router';
+import CharacterCard from './CharacterCard';
 
-const CharacterList = ({ children }) => (
+const CharacterList = ({ characters }) => (
 	<ul className="CharacterList">
-		{children}
+    {characters.map(({ id, name, thumbnail }) =>
+      <li key={id} className="CharacterList__item">
+        <Link to={'/characters/' + id}>
+          <CharacterCard
+            name={name}
+            imgUrl={thumbnail.path + '.' + thumbnail.extension}
+          />
+        </Link>
+      </li>
+    )}
 	</ul>
 );
 
 CharacterList.propTypes = {
-  children: function (props, propName, componentName) {
-    const prop = props[propName];
-
-    // At last one component
-    if (React.Children.count(prop) === 0) {
-      return new Error(`'${componentName}' should have at least one child.`);
-    }
-
-    // Test component type
-    React.Children.forEach(prop, (child) => {
-      if (child.type !== CharacterListItem) {
-        return new Error(`'${componentName}' children should all be 'CharacterListItem' components.`);
-      }
-    })
-  }
+  characters: React.PropTypes.array
 };
 
-CharacterList.Item = CharacterListItem;
 export default CharacterList;

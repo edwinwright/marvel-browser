@@ -5,7 +5,8 @@ const BASE_URL = 'https://gateway.marvel.com/v1/public/characters';
 
 const defaultParams = {
   apikey: MARVEL_PUBLIC_KEY,
-  orderBy: 'name'
+  limit: 100
+  // orderBy: 'name'
 }
 
 const addParamsToUrl = (url, params) => {
@@ -25,5 +26,11 @@ export const getCharacters = (params) => {
     ...defaultParams,
     ...params
   });
+  return getJSON(url);
+}
+
+export const getCharacter = (id) => {
+  let url = BASE_URL + '/' + id;
+  url = addParamsToUrl(url, defaultParams);
   return getJSON(url);
 }

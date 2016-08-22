@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import ImagePreloader from 'shared/utils/ImagePreloader';
 import FilterList from '../components/FilterList';
 import CharacterList from '../components/CharacterList';
-import CharacterCard from '../components/CharacterCard';
 import LoadingIcon from '../components/LoadingIcon';
 
 import { getCharacters } from '../api/Characters';
@@ -113,16 +112,7 @@ const CharacterListContainer = createClass({
 					</FilterList>
 				</div>
 				<div className="CharacterBrowser__list">
-					<CharacterList>
-						{characters.map(({ id, name, thumbnail }) =>
-							<CharacterList.Item key={id}>
-								<CharacterCard
-									name={name}
-									imgUrl={thumbnail.path + '.' + thumbnail.extension}
-								/>
-							</CharacterList.Item>
-						)}
-					</CharacterList>
+					<CharacterList characters={characters} />
 				</div>
 				<div className="CharacterBrowser__loader">
 					<LoadingIcon/>
