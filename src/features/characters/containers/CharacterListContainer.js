@@ -3,6 +3,8 @@ import '../styles/CharacterListContainer.scss';
 
 // Import JS
 import React, { createClass } from 'react';
+import { connect } from 'react-redux';
+
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import ImagePreloader from 'shared/utils/ImagePreloader';
@@ -10,29 +12,26 @@ import FilterList from '../components/FilterList';
 import CharacterList from '../components/CharacterList';
 import LoadingIcon from '../components/LoadingIcon';
 
-import { getCharacters } from '../api/Characters';
+import * as actions from '../actions/characters';
 
 /**
  * CharacterListContainer
  */
 const CharacterListContainer = createClass({
 
-	getDefaultProps() {
-		return {}
-	},
-
 	getInitialState() {
 		return {
 			status: 'LOADING',
-			characters: [],
 			attributionText: ''
 		}
 	},
 
 	componentDidMount() {
-		getCharacters()
-			.then(this.onDataLoaded)
-			.catch(this.onDataError)
+    this.props.getCharacters();
+
+		// getCharacters()
+		// 	.then(this.onDataLoaded)
+		// 	.catch(this.onDataError)
 	},
 
 	onFilterClick(value) {
@@ -75,7 +74,8 @@ const CharacterListContainer = createClass({
 	},
 
 	render() {
-		const { status, characters, attributionText } = this.state
+    const { characters } = this.props;
+		const { status, attributionText } = this.state;
 
 		// Determine class names
 		const isLoading = () => status === 'LOADING'
@@ -122,6 +122,12 @@ const CharacterListContainer = createClass({
 		)
 	}
 
-})
+});
 
-export default CharacterListContainer
+console.log(actions);
+
+
+export default connect(
+  (state) => ({ characters: state.characters }),
+  { getCharacters: actions.getCharacters }
+)(CharacterListContainer);

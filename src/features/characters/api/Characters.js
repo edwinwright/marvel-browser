@@ -21,7 +21,7 @@ const serialize = obj => {
   }, []).join('&');
 };
 
-export const getCharacters = (params) => {
+export const fetchCharacters = (params) => {
   const url = addParamsToUrl(BASE_URL, {
     ...defaultParams,
     ...params
@@ -29,7 +29,7 @@ export const getCharacters = (params) => {
   return getJSON(url);
 }
 
-export const getCharacter = (id) => {
+export const fetchCharacter = (id) => {
   let url = BASE_URL + '/' + id;
   url = addParamsToUrl(url, defaultParams);
   return getJSON(url);

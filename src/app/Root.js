@@ -1,12 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Routing from '../config/Routing';
+import Routing from '../config/routing';
+import configureStore from '../config/store';
 
-import { createStore } from 'redux';
-const reducer = (state, action) => {
-  return state;
-};
-const store = createStore(reducer);
+const store = configureStore();
 
 const Root = () => (
   <Provider store={store}>
