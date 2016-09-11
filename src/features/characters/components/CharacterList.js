@@ -1,7 +1,4 @@
-// Import CSS
 import '../styles/CharacterList.scss';
-
-// Import JS
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import CharacterCard from './CharacterCard';
@@ -13,7 +10,7 @@ const CharacterList = ({ characters }) => (
         <Link to={'/characters/' + id}>
           <CharacterCard
             name={name}
-            imgUrl={thumbnail.path + '.' + thumbnail.extension}
+            thumbURL={thumbnail.path + '.' + thumbnail.extension}
           />
         </Link>
       </li>

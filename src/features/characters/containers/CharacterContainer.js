@@ -1,7 +1,4 @@
-// Import CSS
 // import '../styles/CharacterContainer.scss';
-
-// Import JS
 import React, { createClass, PropTypes } from 'react';
 import classNames from 'classnames';
 import ImagePreloader from 'shared/utils/ImagePreloader';
@@ -78,4 +75,4 @@ const CharacterContainer = createClass({
 
 });
 
-export default CharacterContainer
+export default CharacterContainer;

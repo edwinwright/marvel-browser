@@ -18,7 +18,7 @@ module.exports = {
 
   resolve: {
     root: [
-      'node_modules',
+      // 'node_modules',
       path.resolve(path.join(__dirname, 'src'))
     ]
   },

@@ -1,20 +1,17 @@
-// Import CSS
-import '../styles/FilterList.scss'
-
-// Import JS
-import React, { PropTypes } from 'react'
+import '../styles/FilterList.scss';
+import React, { PropTypes } from 'react';
 
 const FilterList = ({ children }) => (
 	<ul className="FilterList">
 		{children}
 	</ul>
-)
+);
 
 const FilterListItem = ({ children }) => (
 	<li className="FilterList__item">
 		{children}
 	</li>
-)
+);
 
 const FilterListLink = ({ active, children, onClick }) => {
 	if (active) {
@@ -26,8 +23,8 @@ const FilterListLink = ({ active, children, onClick }) => {
 			onClick={onClick}>
 			{children}
 		</a>
-	)
-}
+	);
+};
 
 FilterList.propTypes = {
   children: function (props, propName, componentName) {
@@ -45,7 +42,7 @@ FilterList.propTypes = {
       }
     })
   }
-}
+};
 
 FilterListItem.propTypes = {
   children: function (props, propName, componentName) {
@@ -61,14 +58,14 @@ FilterListItem.propTypes = {
       return new Error(`'${componentName}' child should be a 'FilterListLink' component.`)
     }
   }
-}
+};
 
 FilterListLink.propTypes = {
   active: PropTypes.bool,
   children: PropTypes.node,
   onClick: PropTypes.func
-}
+};
 
-FilterList.Item = FilterListItem
-FilterList.Link = FilterListLink
-export default FilterList
+FilterList.Item = FilterListItem;
+FilterList.Link = FilterListLink;
+export default FilterList;

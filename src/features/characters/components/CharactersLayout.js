@@ -1,4 +1,3 @@
-// Import JS
 import React from 'react';
 import CharacterListContainer from '../containers/CharacterListContainer';
 

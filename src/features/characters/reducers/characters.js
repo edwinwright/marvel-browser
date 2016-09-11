@@ -3,10 +3,10 @@ import { RECEIVE_CHARACTERS } from '../actions/characters';
 const characters = (state = [], action) => {
   switch (action.type) {
     case RECEIVE_CHARACTERS:
-      return action.characters
+      return action.characters;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default characters
+export default characters;

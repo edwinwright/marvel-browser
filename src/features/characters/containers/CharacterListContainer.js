@@ -1,17 +1,13 @@
-// Import CSS
 import '../styles/CharacterListContainer.scss';
-
-// Import JS
 import React, { createClass } from 'react';
 import { connect } from 'react-redux';
-
 import { Link } from 'react-router';
 import classNames from 'classnames';
+
 import ImagePreloader from 'shared/utils/ImagePreloader';
 import FilterList from '../components/FilterList';
 import CharacterList from '../components/CharacterList';
 import LoadingIcon from '../components/LoadingIcon';
-
 import * as actions from '../actions/characters';
 
 /**

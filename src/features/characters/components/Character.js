@@ -1,8 +1,11 @@
-// Import CSS
-// import '../styles/Character.scss'
-
-// Import JS
+// import '../styles/Character.scss';
 import React, { PropTypes } from 'react';
+
+export const cssClass = {
+  name: 'Character__name',
+  description: 'Character__description',
+  thumbnail: 'Character__thumb'
+};
 
 const Character = ({ name, description, thumbnail }) => (
 	<section className="Character">
