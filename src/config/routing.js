@@ -1,10 +1,9 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-
-// Route components
-import PageLayout from 'app/PageLayout';
-import HomeLayout from 'features/home';
-import { CharactersLayout, CharacterLayout } from 'features/characters';
+import PageLayout from '../views/PageLayout';
+import HomeLayout from '../views/HomeLayout';
+import CharactersLayout from '../views/CharactersLayout';
+import CharacterLayout from '../views/CharacterLayout';
 
 const Routing = (
   <Router history={ browserHistory }>
