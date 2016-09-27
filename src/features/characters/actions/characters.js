@@ -1,82 +1,60 @@
-import { fetchCharacters } from '../api/Characters';
+import api from '../api/Characters';
 import ImagePreloader from 'shared/utils/ImagePreloader';
 
+export function selectFilter(filter) {
+  return {
+    type: FILTER_SELECTED,
+    filter
+  }
+}
 
-export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS';
-//
-// // action creator
-// export const getCharacters = () => (
-//   fetchCharacters()
-//     .then(response => {
-//     	const { attributionText, data } = response;
-//
-//   		// Create a preloader and queue each image
-//   		const ip = new ImagePreloader()
-//   		ip.queue(data.results.map(({ thumbnail }) => (
-//   			thumbnail.path + '.' + thumbnail.extension
-//   		)));
-//
-//   		// Call preload and update the state when fulfilled
-//   		return Promise.all([response, ip.preload()]);
-//     })
-//
-//     // .then(() => {
-//     //   this.setState({
-//     //     status: 'LOADED',
-//     //     characters: data.results,
-//     //     attributionText
-//     //   })
-//     // })
-//
-//     .then(response => {
-//     	const { attributionText, data } = response[0];
-//       return {
-//         type: RECEIVE_CHARACTERS,
-//         characters: data.results
-//       };
-//     })
-//
-//     .catch(console.log)
-// );
-//
+export function requestCharacters(query) {
+  return {
+    type: CHARACTERS_REQUEST,
+    query
+  }
+}
+
+
+export function receiveCharacters(query, characters) {
+  return {
+    type: CHARACTERS_SUCCESS,
+    query,
+    characters,
+    receivedAt: Date.now()
+  }
+}
 
 
 
+export function getCharacters(query) {
 
-// action creator
-export const getCharacters = () => {
+  return function(dispatch) {
 
-  // Load character data
-  const characters = fetchCharacters();
+    dispatch(requestCharacters(query));
 
-  // Create a preloader and queue each image
-  const images = characters.then(({ data }) => {
-		const ip = new ImagePreloader()
-		ip.queue(data.results.map(({ thumbnail }) => (
-			thumbnail.path + '.' + thumbnail.extension
-		)));
-    return ip.preload();
-  });
+    // Load character data
+    const characters = api.fetchCharacters();
 
-  return Promise.all([characters, images])
-    .then(response => {
-    	const { attributionText, data } = response[0];
-      return {
-        type: RECEIVE_CHARACTERS,
-        characters: data.results
-      };
-    })
-    .catch(console.log);
+    // Create a preloader and queue each image
+    const images = characters.then(({ data }) => {
+  		const ip = new ImagePreloader()
+  		ip.queue(data.results.map(({ thumbnail }) => (
+  			thumbnail.path + '.' + thumbnail.extension
+  		)));
+      return ip.preload();
+    });
 
-    // .then(() => {
-    //   this.setState({
-    //     status: 'LOADED',
-    //     characters: data.results,
-    //     attributionText
-    //   })
-    // })
+    return Promise.all([characters, images])
+      .then(response => {
+        const { attributionText, data } = response[0];
+        dispatch(receiveCharacters(query, data.results))
+        // TODO: dispatch(receiveAttributionText(attributionText))
+      })
+      .catch(console.log);
 
-};
+  }
+}
 
 
 
@@ -93,3 +71,40 @@ export const getCharacters = () => {
 //     );
 //   };
 // }
+
+//
+//
+// // action creator
+// export function getCharacters() {
+//
+//   // Load character data
+//   const characters = api.fetchCharacters();
+//
+//   // Create a preloader and queue each image
+//   const images = characters.then(({ data }) => {
+// 		const ip = new ImagePreloader()
+// 		ip.queue(data.results.map(({ thumbnail }) => (
+// 			thumbnail.path + '.' + thumbnail.extension
+// 		)));
+//     return ip.preload();
+//   });
+//
+//   return Promise.all([characters, images])
+//     .then(response => {
+//     	const { attributionText, data } = response[0];
+//       return {
+//         type: RECEIVE_CHARACTERS,
+//         characters: data.results
+//       };
+//     })
+//     .catch(console.log);
+//
+//     // .then(() => {
+//     //   this.setState({
+//     //     status: 'LOADED',
+//     //     characters: data.results,
+//     //     attributionText
+//     //   })
+//     // })
+//
+// };

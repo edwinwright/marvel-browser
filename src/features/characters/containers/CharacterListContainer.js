@@ -1,5 +1,5 @@
 import '../styles/CharacterListContainer.scss';
-import React, { createClass } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
@@ -10,17 +10,16 @@ import CharacterList from '../components/CharacterList';
 import LoadingIcon from '../components/LoadingIcon';
 import * as actions from '../actions/characters';
 
-/**
- * CharacterListContainer
- */
-const CharacterListContainer = createClass({
 
-	getInitialState() {
-		return {
+class CharacterListContainer extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
 			status: 'LOADING',
 			attributionText: ''
-		}
-	},
+		};
+	}
 
 	componentDidMount() {
     this.props.getCharacters();
@@ -28,7 +27,7 @@ const CharacterListContainer = createClass({
 		// getCharacters()
 		// 	.then(this.onDataLoaded)
 		// 	.catch(this.onDataError)
-	},
+	}
 
 	onFilterClick(value) {
 		// Set status to loading and clear the data
@@ -41,7 +40,7 @@ const CharacterListContainer = createClass({
 		getCharacters({ nameStartsWith: value })
 			.then(this.onDataLoaded)
 			.catch(this.onDataError);
-	},
+	}
 
 	onDataLoaded(response) {
 		const { attributionText, data } = response;
@@ -61,13 +60,13 @@ const CharacterListContainer = createClass({
 					attributionText
 				})
 			})
-	},
+	}
 
 	onDataError() {
 		this.setState({
 			status: 'ERROR'
 		})
-	},
+	}
 
 	render() {
     const { characters } = this.props;
@@ -118,12 +117,21 @@ const CharacterListContainer = createClass({
 		)
 	}
 
-});
+}
 
-console.log(actions);
+function mapStateToProps(state) {
+  return {
+    characters: state.characters
+  };
+}
 
+function mapDispatchToProps(dispatch) {
+  return {
+    getCharacters: actions.getCharacters
+  };
+}
 
 export default connect(
-  (state) => ({ characters: state.characters }),
-  { getCharacters: actions.getCharacters }
+  mapStateToProps,
+  mapDispatchToProps
 )(CharacterListContainer);

@@ -12,7 +12,11 @@ describe('The <Character> component', function() {
     const thumbnail = "my-image.jpg";
 
     const wrapper = shallow(
-      <Character name={name} description={description} thumbnail={thumbnail}/>
+      <Character
+        name={name}
+        description={description}
+        thumbnail={thumbnail}
+      />
     );
 
     console.log(wrapper.find('.Character__name').text());

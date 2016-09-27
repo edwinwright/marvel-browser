@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { reducers as characters } from '../features/characters';
+import * as characters from '../features/characters';
 
 const reducer = combineReducers({
   ...characters
 });
+
+// console.log(...characters);
 
 export default reducer;

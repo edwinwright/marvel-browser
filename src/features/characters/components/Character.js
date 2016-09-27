@@ -1,4 +1,4 @@
-// import '../styles/Character.scss';
+import '../styles/Character.scss';
 import React, { PropTypes } from 'react';
 
 export const cssClass = {

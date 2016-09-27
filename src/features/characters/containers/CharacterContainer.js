@@ -1,5 +1,5 @@
 // import '../styles/CharacterContainer.scss';
-import React, { createClass, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import ImagePreloader from 'shared/utils/ImagePreloader';
 import Character from '../components/Character';
@@ -8,24 +8,16 @@ import LoadingIcon from '../components/LoadingIcon';
 import { getCharacter } from '../api/Characters';
 
 
-const CharacterContainer = createClass({
-
-	getDefaultProps() {
-		return {}
-	},
-
-	getInitialState() {
-		return {
-			status: 'LOADING',
-			character: {}
-		}
-	},
+class CharacterContainer extends Component {
+  constructor(props) {
+    super(props);
+  }
 
 	componentDidMount() {
 		getCharacter(this.props.params.id)
 			.then(this.onDataLoaded)
 			.catch(this.onDataError)
-	},
+	}
 
 	onDataLoaded(response) {
 		const { data } = response;
@@ -33,13 +25,13 @@ const CharacterContainer = createClass({
 			status: 'LOADED',
 			character: data.results[0]
 		});
-	},
+	}
 
 	onDataError() {
 		this.setState({
 			status: 'ERROR'
 		})
-	},
+	}
 
 	render() {
 		const { status, character: {
@@ -72,7 +64,6 @@ const CharacterContainer = createClass({
 			</div>
 		);
 	}
-
-});
+}
 
 export default CharacterContainer;
