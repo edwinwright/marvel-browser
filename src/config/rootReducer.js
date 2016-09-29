@@ -5,6 +5,4 @@ const rootReducer = combineReducers({
   ...characters
 });
 
-// console.log(...characters);
-
 export default rootReducer;

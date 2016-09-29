@@ -1,7 +1,7 @@
 import { getJSON } from '../utils/XHR';
 import { MARVEL_API_KEY } from 'config/config';
 
-const BASE_URL = 'https://gateway.marvel.com/v1/public/characters';
+const ROOT_URL = 'https://gateway.marvel.com/v1/public/characters';
 
 const defaultParams = {
   apikey: MARVEL_API_KEY,
@@ -9,12 +9,12 @@ const defaultParams = {
   // orderBy: 'name'
 }
 
-const addParamsToUrl = (url, params) => {
+function addParamsToUrl(url, params) {
   params = (/\?/.test(url) ? '&' : '?') + serialize(params);
   return url.replace(/(?=#)|$/, params);
-};
+}
 
-const serialize = obj => {
+function serialize(obj) {
   return Object.keys(obj).reduce((a, k) => {
     a.push(k + '=' + encodeURIComponent(obj[k]));
     return a;
@@ -22,7 +22,7 @@ const serialize = obj => {
 };
 
 export const fetchCharacters = (params) => {
-  const url = addParamsToUrl(BASE_URL, {
+  const url = addParamsToUrl(ROOT_URL, {
     ...defaultParams,
     ...params
   });
@@ -30,7 +30,7 @@ export const fetchCharacters = (params) => {
 }
 
 export const fetchCharacter = (id) => {
-  let url = BASE_URL + '/' + id;
+  let url = ROOT_URL + '/' + id;
   url = addParamsToUrl(url, defaultParams);
   return getJSON(url);
 }

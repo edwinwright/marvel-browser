@@ -1,10 +1,10 @@
+// import './CharacterContainer.scss';
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { getCharacter } from '../services/api/Characters';
+import { getCharacter } from '../services/api/characters';
 import ImagePreloader from '../services/utils/ImagePreloader';
 import Character from '../components/Character';
 import LoadingIcon from '../components/LoadingIcon';
-// import './CharacterContainer.scss';
 
 
 class CharacterContainer extends Component {

@@ -1,40 +1,19 @@
-import api from '../services/api/Characters';
+import * as api from '../services/api/characters';
 import ImagePreloader from '../services/utils/ImagePreloader';
-
-export function selectFilter(filter) {
-  return {
-    type: FILTER_SELECTED,
-    filter
-  }
-}
-
-export function requestCharacters(query) {
-  return {
-    type: CHARACTERS_REQUEST,
-    query
-  }
-}
+import {
+  FILTER_SELECTED,
+  FILTER_INVALIDATED,
+  CHARACTERS_REQUEST,
+  CHARACTERS_SUCCESS,
+  CHARACTERS_FAILURE
+} from './constants';
 
 
-export function receiveCharacters(query, characters) {
-  return {
-    type: CHARACTERS_SUCCESS,
-    query,
-    characters,
-    receivedAt: Date.now()
-  }
-}
-
-
-
-export function getCharacters(query) {
-
+export function fetchCharacters(term) {
   return function(dispatch) {
-
-    dispatch(requestCharacters(query));
-
-    // Load character data
-    const characters = api.fetchCharacters();
+    const params = term ? { nameStartsWith: term } : {};
+    const characters = api.fetchCharacters(params);
+    dispatch(charactersRequest());
 
     // Create a preloader and queue each image
     const images = characters.then(({ data }) => {
@@ -48,13 +27,45 @@ export function getCharacters(query) {
     return Promise.all([characters, images])
       .then(response => {
         const { attributionText, data } = response[0];
-        dispatch(receiveCharacters(query, data.results))
+        dispatch(charactersSuccess(term, data.results));
         // TODO: dispatch(receiveAttributionText(attributionText))
       })
-      .catch(console.log);
+      .catch(error => {
+        dispatch(charactersFailure(error))
+      });
+  };
+}
 
+function charactersRequest() {
+  return {
+    type: CHARACTERS_REQUEST
   }
 }
+
+function charactersSuccess(term, characters) {
+  return {
+    type: CHARACTERS_SUCCESS,
+    term,
+    characters,
+    receivedAt: Date.now()
+  }
+}
+
+function charactersFailure(error) {
+  return {
+    type: CHARACTERS_FAILURE,
+    error
+  }
+}
+
+
+//
+// export function getCharacters(query) {
+//
+//   return function(dispatch) {
+//
+//   }
+// }
 
 
 
@@ -71,40 +82,3 @@ export function getCharacters(query) {
 //     );
 //   };
 // }
-
-//
-//
-// // action creator
-// export function getCharacters() {
-//
-//   // Load character data
-//   const characters = api.fetchCharacters();
-//
-//   // Create a preloader and queue each image
-//   const images = characters.then(({ data }) => {
-// 		const ip = new ImagePreloader()
-// 		ip.queue(data.results.map(({ thumbnail }) => (
-// 			thumbnail.path + '.' + thumbnail.extension
-// 		)));
-//     return ip.preload();
-//   });
-//
-//   return Promise.all([characters, images])
-//     .then(response => {
-//     	const { attributionText, data } = response[0];
-//       return {
-//         type: RECEIVE_CHARACTERS,
-//         characters: data.results
-//       };
-//     })
-//     .catch(console.log);
-//
-//     // .then(() => {
-//     //   this.setState({
-//     //     status: 'LOADED',
-//     //     characters: data.results,
-//     //     attributionText
-//     //   })
-//     // })
-//
-// };

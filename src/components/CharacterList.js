@@ -5,7 +5,7 @@ import CharacterCard from './CharacterCard';
 
 const CharacterList = ({ characters }) => {
   if (!characters) {
-    return <div>Loading...</div>
+    return <div></div>
   }
   return (
   	<ul className="CharacterList">
