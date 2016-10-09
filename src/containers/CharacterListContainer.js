@@ -1,66 +1,36 @@
-import './CharacterListContainer.scss';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import classNames from 'classnames';
-import ImagePreloader from 'services/utils/ImagePreloader';
-import FilterList from '../components/FilterList';
+import { fetchCharacters } from '../actions/characters';
 import CharacterList from '../components/CharacterList';
-import LoadingIcon from '../components/LoadingIcon';
-import * as actions from '../actions/characters';
 
 
 class CharacterListContainer extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			status: 'LOADING',
-			attributionText: ''
-		};
-	}
-
 	componentDidMount() {
-    this.props.fetchCharacters();
+    if (!this.props.characters) {
+      this.props.fetchCharacters();
+    }
 	}
 
 	render() {
-    const { characters } = this.props;
-		const { status, attributionText } = this.state;
-
-		// Determine class names
-		const isLoading = () => status === 'LOADING'
-		const classes = {
-			component: classNames('CharacterBrowser', {
-				'is-loading': isLoading()
-			})
-		}
-
+    const { characters, isFetching } = this.props;
 		return (
-			<div className={classes.component}>
-				<div className="CharacterBrowser__list">
-					<CharacterList characters={characters} />
-				</div>
-				<div className="CharacterBrowser__loader">
-					<LoadingIcon/>
-				</div>
-				<p>{attributionText}</p>
-			</div>
+			<CharacterList
+        characters={characters}
+        isFetching={isFetching} />
 		)
 	}
 }
 
 function mapStateToProps(state) {
   return {
-    characters: state.characters
+    characters: state.characters.all,
+    isFetching: state.characters.isFetching
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchCharacters: actions.fetchCharacters
-  }, dispatch);
+  return bindActionCreators({ fetchCharacters }, dispatch);
 }
 
 export default connect(

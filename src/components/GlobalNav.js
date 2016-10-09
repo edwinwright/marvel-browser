@@ -6,7 +6,7 @@ const GlobalNav = () => (
 	<nav className="GlobalNav">
 		<ul className="GlobalNav__list">
 			<li className="GlobalNav__item">
-				<GlobalNavLink to="/characters">Characters</GlobalNavLink>
+				<GlobalNavLink to="/search">Search</GlobalNavLink>
 			</li>
 		</ul>
 	</nav>

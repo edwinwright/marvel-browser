@@ -1,30 +1,29 @@
+import { normalize } from 'normalizr';
+import { camelizeKeys } from 'humps';
 import {
-  FILTER_SELECTED,
-  FILTER_INVALIDATED,
   CHARACTERS_REQUEST,
   CHARACTERS_SUCCESS,
   CHARACTERS_FAILURE
-} from '../actions/constants';
+} from '../actions/characters';
 
+const INITIAL_STATE = {
+  all: null,
+  character: null,
+  isFetching: false
+};
 
-
-function selectedFilter(state = '', action) {
+const characters = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FILTER_SELECTED:
-      return action.filter;
-    default:
-      return state;
-  };
-}
-
-export { selectedFilter };
-
-
-
-const characters = (state = [], action) => {
-  switch (action.type) {
+  case CHARACTERS_REQUEST:
+    return { ...state, isFetching: true };
+  case CHARACTERS_FAILURE:
+    return { ...state, isFetching: false };
   case CHARACTERS_SUCCESS:
-    return action.characters;
+    return {
+      ...state,
+      isFetching: false,
+      all: [ ...action.response.data.results ]
+    };
   }
   return state;
 };
@@ -32,6 +31,13 @@ const characters = (state = [], action) => {
 export { characters };
 
 
+
+
+
+
+
+//
+//
 // function characters(state = {
 //   isFetching: false,
 //   didInvalidate: false,

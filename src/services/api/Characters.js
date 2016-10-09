@@ -5,7 +5,7 @@ const ROOT_URL = 'https://gateway.marvel.com/v1/public/characters';
 
 const defaultParams = {
   apikey: MARVEL_API_KEY,
-  limit: 100
+  limit: 20,
   // orderBy: 'name'
 }
 

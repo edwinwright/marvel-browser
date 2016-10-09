@@ -1,84 +1,64 @@
-import * as api from '../services/api/characters';
-import ImagePreloader from '../services/utils/ImagePreloader';
-import {
-  FILTER_SELECTED,
-  FILTER_INVALIDATED,
-  CHARACTERS_REQUEST,
-  CHARACTERS_SUCCESS,
-  CHARACTERS_FAILURE
-} from './constants';
+import { CALL_API } from '../middleware/api';
+import { MARVEL_API_KEY } from '../config/config';
+import Schemas from '../schemas';
 
 
-export function fetchCharacters(term) {
-  return function(dispatch) {
-    const params = term ? { nameStartsWith: term } : {};
-    const characters = api.fetchCharacters(params);
-    dispatch(charactersRequest());
+// TODO: move to url utils module
+function serialize(obj) {
+  return Object.keys(obj).reduce((a, k) => {
+    a.push(k + '=' + encodeURIComponent(obj[k]));
+    return a;
+  }, []).join('&');
+};
 
-    // Create a preloader and queue each image
-    const images = characters.then(({ data }) => {
-  		const ip = new ImagePreloader()
-  		ip.queue(data.results.map(({ thumbnail }) => (
-  			thumbnail.path + '.' + thumbnail.extension
-  		)));
-      return ip.preload();
-    });
+function addQueryParameters(url, params) {
+  params = (/\?/.test(url) ? '&' : '?') + serialize(params);
+  return url.replace(/(?=#)|$/, params);
+}
 
-    return Promise.all([characters, images])
-      .then(response => {
-        const { attributionText, data } = response[0];
-        dispatch(charactersSuccess(term, data.results));
-        // TODO: dispatch(receiveAttributionText(attributionText))
-      })
-      .catch(error => {
-        dispatch(charactersFailure(error))
-      });
+
+const API_ROOT = 'https://gateway.marvel.com/v1/public/characters';
+
+export const CHARACTERS_REQUEST = 'CHARACTERS_REQUEST';
+export const CHARACTERS_SUCCESS = 'CHARACTERS_SUCCESS';
+export const CHARACTERS_FAILURE = 'CHARACTERS_FAILURE';
+
+export const fetchCharacters = (nameStartsWith = '') => {
+  const queryParams = {
+    apikey: MARVEL_API_KEY,
+    limit: 24,
+    offset: 0,
+    orderBy: 'name'
   };
-}
 
-function charactersRequest() {
   return {
-    type: CHARACTERS_REQUEST
+    [CALL_API]: {
+      types: [CHARACTERS_REQUEST, CHARACTERS_SUCCESS, CHARACTERS_FAILURE],
+      endpoint: addQueryParameters(API_ROOT, queryParams),
+      options: {
+        method: 'GET',
+      },
+    }
   }
-}
+};
 
-function charactersSuccess(term, characters) {
+export const CHARACTER_REQUEST = 'CHARACTER_REQUEST';
+export const CHARACTER_SUCCESS = 'CHARACTER_SUCCESS';
+export const CHARACTER_FAILURE = 'CHARACTER_FAILURE';
+
+export const fetchCharacter = (characterId) => {
+  const endpoint = `${API_ROOT}/${characterId}`;
+  const queryParams = {
+    apikey: MARVEL_API_KEY
+  };
+
   return {
-    type: CHARACTERS_SUCCESS,
-    term,
-    characters,
-    receivedAt: Date.now()
+    [CALL_API]: {
+      types: [CHARACTER_REQUEST, CHARACTER_SUCCESS, CHARACTER_FAILURE],
+      endpoint: addQueryParameters(endpoint, queryParams),
+      options: {
+        method: 'GET',
+      },
+    }
   }
-}
-
-function charactersFailure(error) {
-  return {
-    type: CHARACTERS_FAILURE,
-    error
-  }
-}
-
-
-//
-// export function getCharacters(query) {
-//
-//   return function(dispatch) {
-//
-//   }
-// }
-
-
-
-
-// https://github.com/reactjs/redux/issues/99
-
-// export function doSomethingAsync() {
-//   return (dispatch) => {
-//     dispatch({ type: SOMETHING_STARTED });
-//
-//     return requestSomething().then(
-//       (result) =>  dispatch({ type: SOMETHING_COMPLETED, result }),
-//       (error) =>  dispatch({ type: SOMETHING_FAILED, error })
-//     );
-//   };
-// }
+};

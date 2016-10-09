@@ -1,35 +1,12 @@
-// import './CharacterContainer.scss';
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
-import { getCharacter } from '../services/api/characters';
-import ImagePreloader from '../services/utils/ImagePreloader';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { fetchCharacter } from '../services/api/characters';
 import Character from '../components/Character';
-import LoadingIcon from '../components/LoadingIcon';
-
 
 class CharacterContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
 	componentDidMount() {
-		getCharacter(this.props.params.id)
-			.then(this.onDataLoaded)
-			.catch(this.onDataError)
-	}
-
-	onDataLoaded(response) {
-		const { data } = response;
-		this.setState({
-			status: 'LOADED',
-			character: data.results[0]
-		});
-	}
-
-	onDataError() {
-		this.setState({
-			status: 'ERROR'
-		})
+		this.props.fetchCharacter(this.props.params.id);
 	}
 
 	render() {
@@ -65,4 +42,15 @@ class CharacterContainer extends Component {
 	}
 }
 
-export default CharacterContainer;
+function mapStateToProps(state) {
+  return { character: state.character };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchCharacter }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CharacterContainer);

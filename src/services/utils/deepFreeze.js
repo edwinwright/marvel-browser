@@ -1,4 +1,3 @@
-
 const deepFreeze = function (o) {
   Object.freeze(o);
 
