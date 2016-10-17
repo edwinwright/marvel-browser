@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchCharacter } from '../services/api/characters';
 import Character from '../components/Character';
+import { fetchCharacter } from '../actions/characters';
 
 class CharacterContainer extends Component {
 	componentDidMount() {
@@ -13,8 +13,6 @@ class CharacterContainer extends Component {
 		const { status, character: {
 			name, description, thumbnail
 		}} = this.state;
-
-		console.log(this.state)
 
 		// Determine class names
 		const isLoading = () => status === 'LOADING';

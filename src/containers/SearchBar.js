@@ -1,46 +1,51 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/characters';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { term: '' }
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.state = {
+      term: ''
+    }
   }
 
-  render() {
-    return (
-      <form onSubmit={this.onFormSubmit}>
-        <input
-          placeholder="Character name begins with..."
-          value={this.term}
-          onChange={this.onInputChange} />
-        <button type="submit">Search</button>
-      </form>
-    );
-  }
-
-  onInputChange(event) {
+  handleInputChange(event) {
     this.setState({ term: event.target.value });
   }
 
-  onFormSubmit(event) {
+  handleFormSubmit(event) {
     const { term } = this.state;
     event.preventDefault();
     if (term.length) {
-      this.props.fetchCharacters(term);
+      this.props.onFormSubmit(term);
       this.setState({ term: '' });
     }
   }
+
+  render() {
+    const { placeholder, isFetching } = this.props;
+    return (
+      <form onSubmit={event => this.handleFormSubmit(event)}>
+        <input
+          placeholder={placeholder}
+          value={this.state.term}
+          onChange={(event) => this.handleInputChange(event)} />
+        <button
+          type="submit"
+          className="button"
+          disabled={isFetching}>
+          Search
+        </button>
+      </form>
+    );
+  }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchCharacters: actions.fetchCharacters
-  }, dispatch);
-}
+SearchBar.propTypes = {
+  placeholder: PropTypes.string,
+  isFetching: PropTypes.bool,
+  onFormSubmit: PropTypes.func.isRequired
+};
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default SearchBar;

@@ -8,8 +8,8 @@ import CharacterPage from './containers/CharacterPage';
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
-    <Route path="search" component={SearchPage} />
-    <Route path="character/:id" component={CharacterPage} />
+    <Route path="search(/:term)" component={SearchPage} />
+    <Route path="characters/:id" component={CharacterPage} />
   </Route>
 );
 

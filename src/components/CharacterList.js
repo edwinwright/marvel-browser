@@ -12,21 +12,18 @@ function CharacterList({ characters, isFetching }) {
   }
 
   return (
-    <div>
-    	<ul className="CharacterList">
-        {characters.map(({ id, name, thumbnail }) =>
-          <li key={id} className="CharacterList__item">
-            <Link to={'/characters/' + id}>
-              <CharacterCard
-                name={name}
-                thumbURL={thumbnail.path + '.' + thumbnail.extension}
-              />
-            </Link>
-          </li>
-        )}
-    	</ul>
-      {loader}
-    </div>
+  	<ul className="CharacterList">
+      {characters.map(({ id, name, thumbnail }) =>
+        <li key={id} className="CharacterList__item">
+          <Link to={'/characters/' + id}>
+            <CharacterCard
+              name={name}
+              thumbURL={thumbnail.path + '.' + thumbnail.extension}
+            />
+          </Link>
+        </li>
+      )}
+  	</ul>
   )
 };
 
