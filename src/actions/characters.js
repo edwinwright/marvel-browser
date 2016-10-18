@@ -9,6 +9,7 @@ export const CHARACTER_REQUEST  = 'CHARACTER_REQUEST';
 export const CHARACTER_SUCCESS  = 'CHARACTER_SUCCESS';
 export const CHARACTER_FAILURE  = 'CHARACTER_FAILURE';
 
+
 // TODO: move to url utils module
 function serialize(obj) {
   return Object.keys(obj).reduce((a, k) => {
@@ -29,7 +30,7 @@ const ITEMS_PER_PAGE = 24;
 
 // Fetches a page of characters.
 // Relies on the custom API middleware.
-const fetchCharacters = (params) => {
+function fetchCharacters(params) {
   const defaults = {
     apikey: MARVEL_API_KEY,
     limit: ITEMS_PER_PAGE,
@@ -50,40 +51,34 @@ const fetchCharacters = (params) => {
   };
 };
 
-// Fetches a page of characters.
-// Bails out if page is cached and user didn't specifically request next page.
-// Relies on Redux Thunk middleware.
-
-
 /**
- * [loadCharacters description]
- * @param  {string} term - The search term
- * @param  {boolean} nextPage -
- * @return {function} - A redux thunk.
+ * An action creator that fetches a page of characters for the given search
+ * term. Exits if the results have already been fetched and cached, or if there
+ * are no more results to return.
+ *
+ * @param  {string} nameStartsWith  - Filters characters whose name starts with this string
+ * @param  {boolean} nextPage       - Fetches the next page of results if true
+ * @return {function}               - A redux thunk
  */
-function loadCharacters(term, nextPage) {
+export function loadCharacters(nameStartsWith = '', nextPage) {
   return (dispatch, getState) => {
 
     // Get cached pagination data for the query
-    const pagination = getState().pagination.charactersByTerm[term] || {};
+    const pagination = getState().pagination.charactersByTerm[nameStartsWith] || {};
     const { total = 0, pageCount = 0 } = pagination;
 
-    // Exit if we already have cached results and are not requesting the next page
-    if (pageCount > 0 && !nextPage) {
-      return null;
-    }
+    // Exit if we have already cached the results and are not requesting the next page
+    if (pageCount > 0 && !nextPage) return null;
 
     // Exit if we have loaded all results
-    if (pageCount > 0 && pageCount * ITEMS_PER_PAGE >= total) {
-      return null;
-    }
+    if (pageCount > 0 && pageCount * ITEMS_PER_PAGE >= total) return null;
 
     // Define query params
     const queryParams = {
       offset: pageCount * ITEMS_PER_PAGE
     }
-    if (term && term.length) {
-      queryParams.nameStartsWith = term;
+    if (nameStartsWith.length) {
+      queryParams.nameStartsWith = nameStartsWith;
     }
 
     // Dispatch the action
@@ -91,12 +86,10 @@ function loadCharacters(term, nextPage) {
   };
 };
 
-export { loadCharacters };
-
 
 // Fetches a single character from the Marvel API.
 // Relies on api middleware to to send the API call.
-export const fetchCharacter = (id) => {
+function fetchCharacter(id) {
   const endpoint = `${API_ROOT}/${id}`;
   const queryParams = {
     apikey: MARVEL_API_KEY
@@ -114,12 +107,23 @@ export const fetchCharacter = (id) => {
   }
 };
 
-export const loadCharacter = (id) => {
+/**
+ * An action creator that fetches a character for the given id. Exits if the
+ * result has already been fetched and cached..
+ *
+ * @param  {number} id  - The character id
+ * @return {function}   - A redux thunk
+ */
+export function loadCharacter(id) {
   return (dispatch, getState) => {
+
+    // Get cached data for the query
     const character = getState().entities.characters[id];
-    if (!character) {
-      return null;
-    }
+
+    // Exit if we have already cached the results
+    if (!character) return null;
+
+    // Dispatch the action
     dispatch(fetchCharacter(id));
   }
 }

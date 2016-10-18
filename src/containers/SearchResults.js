@@ -5,7 +5,7 @@ const propTypes = {
   characters: PropTypes.array,
   total: PropTypes.number,
   isFetching: PropTypes.bool,
-  onLoadMoreClick: PropTypes.function.isRequired,
+  onLoadMoreClick: PropTypes.func.isRequired,
 };
 
 class SearchResults extends Component {

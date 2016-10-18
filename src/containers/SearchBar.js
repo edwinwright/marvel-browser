@@ -2,6 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+
+const propTypes = {
+  placeholder: PropTypes.string,
+  isFetching: PropTypes.bool,
+  onFormSubmit: PropTypes.func.isRequired,
+};
+
+
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -42,10 +50,6 @@ class SearchBar extends Component {
   }
 }
 
-SearchBar.propTypes = {
-  placeholder: PropTypes.string,
-  isFetching: PropTypes.bool,
-  onFormSubmit: PropTypes.func.isRequired
-};
+SearchBar.propTypes = propTypes;
 
 export default SearchBar;
