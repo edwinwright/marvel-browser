@@ -1,38 +1,38 @@
 .GlobalNav {
-	$nav-heading-fontsize: 18px;
-	$nav-heading-bordercolor: #ccc;
-	$nav-link-fontsize: 14px;
+  $nav-heading-fontsize: 18px;
+  $nav-heading-bordercolor: #ccc;
+  $nav-link-fontsize: 14px;
   $font-color: #fff;
 
-	&__category {
-		margin: 10px 20px;
-		padding: 0;
-		border-bottom: 1px solid $nav-heading-bordercolor;
-		color: $font-color;
-		font-size: $nav-heading-fontsize;
-	}
+  &__category {
+    margin: 10px 20px;
+    padding: 0;
+    border-bottom: 1px solid $nav-heading-bordercolor;
+    color: $font-color;
+    font-size: $nav-heading-fontsize;
+  }
 
-	&__list {
-		margin: 5px 20px 20px;
-		padding: 0;
-		list-style-type: none;
-		list-style-image: none;
-	}
+  &__list {
+    margin: 5px 20px 20px;
+    padding: 0;
+    list-style-type: none;
+    list-style-image: none;
+  }
 
-	&__item {
-		margin: 0;
-		padding: 0;
-		list-style-type: none;
-		list-style-image: none;
-	}
+  &__item {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    list-style-image: none;
+  }
 
-	&__link {
-		color: $font-color;
-		font-size: $nav-link-fontsize;
-		text-decoration: none;
+  &__link {
+    color: $font-color;
+    font-size: $nav-link-fontsize;
+    text-decoration: none;
 
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
