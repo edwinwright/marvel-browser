@@ -3,8 +3,7 @@
     "react"
   ],
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+    "airbnb"
   ],
   "env": {
     "browser": true,
