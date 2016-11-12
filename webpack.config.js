@@ -1,26 +1,27 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var autoprefixer = require('autoprefixer');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
 
   entry: [
     'webpack-hot-middleware/client',
-    './src/index'
+    './src/index',
   ],
 
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/build/'
+    publicPath: '/build/',
   },
 
   resolve: {
     root: [
       // 'node_modules',
-      path.resolve(path.join(__dirname, 'src'))
-    ]
+      path.resolve(path.join(__dirname, 'src')),
+    ],
+    extensions: ['', '.js', '.jsx'],
   },
 
   devtool: 'eval-cheap-module-source-map',
@@ -28,9 +29,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('styles.css', {
-      allChunks: true
-    })
+    new ExtractTextPlugin('styles.css', { allChunks: true }),
   ],
 
   module: {
@@ -38,9 +37,9 @@ module.exports = {
 
       // Load scripts
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['babel'],
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
       },
 
       { test: /\.json$/, loader: 'json' },
@@ -50,7 +49,7 @@ module.exports = {
         test: /\.s?css$/,
         // loader: ExtractTextPlugin.extract('css!sass'),
         loader: ExtractTextPlugin.extract('css?sourceMap!postcss?sourceMap!sass?sourceMap'),
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
       },
 
 
@@ -61,23 +60,21 @@ module.exports = {
       {
         test: /\.(png)$/,
         loader: 'url?name=[path][name].[ext]',
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
       },
 
       // Load static files
       {
         test: /\.(html)$/,
         loader: 'file?name=[path][name].[ext]',
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
       }
 
     ]
   },
 
   postcss: [
-    autoprefixer({
-      browsers: ['last 2 versions']
-    })
-  ]
+    autoprefixer({ browsers: ['last 2 versions'] }),
+  ],
 
 };
