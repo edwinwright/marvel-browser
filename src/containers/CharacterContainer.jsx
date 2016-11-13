@@ -24,8 +24,8 @@ class CharacterContainer extends Component {
     const isLoading = () => status === 'LOADING';
     const classes = {
       component: classNames('Character', {
-        'is-loading': isLoading()
-      })
+        'is-loading': isLoading(),
+      }),
     };
 
     const content = (isLoading()) ? (
@@ -57,4 +57,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchCharacter }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CharacterContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CharacterContainer);

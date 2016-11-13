@@ -1,21 +1,10 @@
 {
-  "plugins": [
-    "react"
-  ],
   "extends": [
     "airbnb"
   ],
   "env": {
     "browser": true,
     "node": true,
-    "jasmine": true,
-    "es6": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "jasmine": true
   }
 }

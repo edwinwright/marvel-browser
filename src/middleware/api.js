@@ -1,6 +1,6 @@
 import { normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
-import 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = Symbol('Call API');
@@ -13,20 +13,15 @@ export const CALL_API = Symbol('Call API');
 
 const callApi = (endpoint, options = {}, schema = null) => (
   fetch(endpoint, options)
-    .then(response =>
-      response.json().then((json) => {
-        if (!response.ok) {
-          return Promise.reject(json);
-        }
-
-        const camelizedJson = camelizeKeys(json);
-
-        if (schema) {
-          return normalize(camelizedJson, schema);
-        }
-        return camelizedJson;
-      })
-    )
+    .then(response => (
+      response.json()
+        .then((json) => {
+          if (!response.ok) return Promise.reject(json);
+          const camelizedJson = camelizeKeys(json);
+          if (schema) return normalize(camelizedJson, schema);
+          return camelizedJson;
+        })
+    ))
 );
 
 /*
@@ -65,17 +60,17 @@ export default store => next => (action) => {
   next(actionWith({ type: requestType, endpoint }));
 
   return callApi(endpoint, options, schema).then(
-    (response) => {
-      return next(actionWith({
+    response => (
+      next(actionWith({
         type: successType,
         response,
-      }));
-    },
-    (error) => {
-      return next(actionWith({
+      }))
+    ),
+    error => (
+      next(actionWith({
         type: failureType,
         error: error.message || 'Something bad happened',
-      }));
-    }
+      }))
+    ),
   );
 };

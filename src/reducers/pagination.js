@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux';
 import paginate from './paginate';
-import * as ActionTypes from '../actions/characters';
+import * as actionTypes from '../actions/characters';
 
 // Updates the pagination data for different actions.
 const pagination = combineReducers({
   charactersByTerm: paginate({
     mapActionToKey: action => action.key,
     types: [
-      ActionTypes.CHARACTERS_REQUEST,
-      ActionTypes.CHARACTERS_SUCCESS,
-      ActionTypes.CHARACTERS_FAILURE,
+      actionTypes.CHARACTERS_REQUEST,
+      actionTypes.CHARACTERS_SUCCESS,
+      actionTypes.CHARACTERS_FAILURE,
     ],
   }),
 });
 
-export { pagination };
+export default pagination;

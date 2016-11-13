@@ -1,6 +1,6 @@
 
-export const get = (url) => {
-  return new Promise((resolve, reject) => {
+export const get = url => (
+  new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = () => {
@@ -12,7 +12,7 @@ export const get = (url) => {
     };
     xhr.onerror = () => reject(Error('Network error'));
     xhr.send();
-  });
-};
+  })
+);
 
 export const getJSON = url => get(url).then(JSON.parse);

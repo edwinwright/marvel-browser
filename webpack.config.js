@@ -19,7 +19,7 @@ module.exports = {
   resolve: {
     root: [
       // 'node_modules',
-      path.resolve(path.join(__dirname, 'src')),
+      // path.resolve(path.join(__dirname, 'src')),
     ],
     extensions: ['', '.js', '.jsx'],
   },
@@ -53,7 +53,9 @@ module.exports = {
       },
 
 
-      // ExtractTextPlugin.extract('style','css?sourceMap&modules&importLoaders=1&localI‌​dentName=[name]__[local]___[hash:base64:5]!sass?sourceMap')
+      // ExtractTextPlugin.extract(
+      // 'style',
+      // 'css?sourceMap&modules&importLoaders=1&localI‌​dentName=[name]__[local]___[hash:base64:5]!sass?sourceMap')
 
 
       // Load images

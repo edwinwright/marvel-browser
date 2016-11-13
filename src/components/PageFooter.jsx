@@ -1,6 +1,6 @@
 import React from 'react';
 import './PageFooter.scss';
-import { VERSION } from 'config/constants';
+import { VERSION } from '../config/constants';
 
 const PageFooter = () => (
   <footer className="PageFooter">

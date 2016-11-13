@@ -1,9 +1,9 @@
 import { Schema, arrayOf } from 'normalizr';
 
 const options = {
-  idAttribute: ({ id, resourceURI }) => {
-    return id || resourceURI.substr(resourceURI.lastIndexOf('/') + 1);
-  },
+  idAttribute: ({ id, resourceURI }) => (
+    id || resourceURI.substr(resourceURI.lastIndexOf('/') + 1)
+  ),
 };
 
 const character = new Schema('characters', options);

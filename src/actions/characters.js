@@ -1,5 +1,5 @@
 import { CALL_API } from '../middleware/api';
-import { MARVEL_API_KEY } from '../config/config';
+import MARVEL_API_KEY from '../config/config';
 import schemas from '../schemas/marvel';
 
 export const CHARACTERS_REQUEST = 'CHARACTERS_REQUEST';

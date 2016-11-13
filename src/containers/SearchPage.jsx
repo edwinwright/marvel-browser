@@ -5,21 +5,20 @@ import { loadCharacters } from '../actions/characters';
 import SearchBar from '../containers/SearchBar';
 import SearchResults from '../containers/SearchResults';
 
-
 const propTypes = {
+  params: PropTypes.object,
   pagination: PropTypes.object,
   characters: PropTypes.array,
+  loadCharacters: PropTypes.func,
 };
 
-const defaultProps = {};
-
 const contextTypes = {
-  router: React.PropTypes.object
-}
+  router: React.PropTypes.object,
+};
 
 
 class SearchPage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadCharacters(this.props.params.term);
   }
 
@@ -33,7 +32,7 @@ class SearchPage extends Component {
   }
 
   render() {
-    const { characters, pagination} = this.props;
+    const { characters, pagination } = this.props;
     if (!pagination) return <div>Loading...</div>;
     return (
       <section className="SearchPage">
@@ -41,12 +40,14 @@ class SearchPage extends Component {
           <SearchBar
             placeholder="Name begins with..."
             isFetching={pagination.isFetching}
-            onFormSubmit={term => this.handleFormSubmit(term)} />
+            onFormSubmit={term => this.handleFormSubmit(term)}
+          />
           <SearchResults
             characters={characters}
             total={pagination.total}
             isFetching={pagination.isFetching}
-            onLoadMoreClick={() => this.handleLoadMoreClick()} />
+            onLoadMoreClick={() => this.handleLoadMoreClick()}
+          />
         </div>
       </section>
     );
@@ -56,11 +57,10 @@ class SearchPage extends Component {
 SearchPage.propTypes = propTypes;
 SearchPage.contextTypes = contextTypes;
 
-
 function selectCharactersByTerm(state, term) {
   const {
     pagination: { charactersByTerm },
-    entities: { characters }
+    entities: { characters },
   } = state;
   return charactersByTerm[term] &&
     charactersByTerm[term].ids.map(id => characters[id]);
@@ -80,5 +80,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(SearchPage);

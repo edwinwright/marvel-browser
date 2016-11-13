@@ -4,14 +4,20 @@ import { connect } from 'react-redux';
 import Character from '../components/Character';
 import { loadCharacter } from '../actions/characters';
 
+const propTypes = {
+  loadCharacter: PropTypes.func.isRequired,
+  params: PropTypes.object,
+  character: PropTypes.object,
+};
+
 class CharacterPage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadCharacter(this.props.params.id);
   }
 
   render() {
     if (!this.props.character) {
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
 
     const { name, description, thumbnail } = this.props.character;
@@ -27,6 +33,8 @@ class CharacterPage extends Component {
   }
 }
 
+CharacterPage.propTypes = propTypes;
+
 function mapStateToProps(state, ownProps) {
   return { character: state.entities.characters[ownProps.params.id] };
 }
@@ -35,4 +43,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ loadCharacter }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CharacterPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CharacterPage);
