@@ -20,7 +20,7 @@ class CharacterPage extends Component {
         <Character
           name={name}
           description={description}
-          thumbnail={thumbnail.path + '.' + thumbnail.extension}
+          thumbnail={`${thumbnail.path}.${thumbnail.extension}`}
         />
       </div>
     );

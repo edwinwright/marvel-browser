@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise';
-import api from '../middleware/api';
 import createLogger from 'redux-logger';
+import api from '../middleware/api';
 import rootReducer from '../reducers/index';
-import DevTools from '../containers/DevTools'
+import DevTools from '../containers/DevTools';
 
 const configureStore = (preloadedState) => {
   const store = createStore(
@@ -25,6 +25,6 @@ const configureStore = (preloadedState) => {
   }
 
   return store;
-}
+};
 
 export default configureStore;

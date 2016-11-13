@@ -1,29 +1,31 @@
-import './FilterList.scss';
 import React, { PropTypes } from 'react';
+import './FilterList.scss';
 
 const FilterList = ({ children }) => (
-	<ul className="FilterList">
-		{children}
-	</ul>
+  <ul className="FilterList">
+    {children}
+  </ul>
 );
 
 const FilterListItem = ({ children }) => (
-	<li className="FilterList__item">
-		{children}
-	</li>
+  <li className="FilterList__item">
+    {children}
+  </li>
 );
 
 const FilterListLink = ({ active, children, onClick }) => {
-	if (active) {
-		return <span>{children}</span>
-	}
-	return (
-		<a href="#"
-			className="FilterList__link"
-			onClick={onClick}>
-			{children}
-		</a>
-	);
+  if (active) {
+    return <span>{children}</span>;
+  }
+  return (
+    <a
+      href="#"
+      className="FilterList__link"
+      onClick={onClick}
+    >
+      {children}
+    </a>
+  );
 };
 
 FilterList.propTypes = {

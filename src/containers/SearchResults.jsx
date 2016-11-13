@@ -22,19 +22,19 @@ class SearchResults extends Component {
     );
   }
 
-	render() {
+  render() {
     const { characters, total, isFetching } = this.props;
     const loadMore = characters.length < total ? this.renderLoadMore() : null;
-		return (
+    return (
       <div>
-  			<CharacterList
+        <CharacterList
           characters={characters}
           isFetching={isFetching}
         />
         {loadMore}
       </div>
-		);
-	}
+    );
+  }
 }
 
 SearchResults.propTypes = propTypes;

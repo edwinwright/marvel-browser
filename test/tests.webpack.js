@@ -18,12 +18,12 @@
 
 // Create a context (dynamic require)
 // https://webpack.github.io/docs/context.html
-var context = require.context('../src', true, /\.js$/);
+const context = require.context('../src', true, /\.js$/);
 
 // Require all files excluding any entrypoints
 // Creates a require(...) entry for each file while excluding certain files
-var exclude = ['./index.js'];
-context.keys().forEach(function (key) {
+const exclude = ['./index.js'];
+context.keys().forEach((key) => {
   if (exclude.indexOf(key) === -1) {
     context(key);
   }

@@ -53,7 +53,7 @@ module.exports = {
       },
 
 
-        // ExtractTextPlugin.extract('style','css?sourceMap&modules&importLoaders=1&localI‌​dentName=[name]__[local]___[hash:base64:5]!sass?sourceMap')
+      // ExtractTextPlugin.extract('style','css?sourceMap&modules&importLoaders=1&localI‌​dentName=[name]__[local]___[hash:base64:5]!sass?sourceMap')
 
 
       // Load images
@@ -68,9 +68,9 @@ module.exports = {
         test: /\.(html)$/,
         loader: 'file?name=[path][name].[ext]',
         include: path.join(__dirname, 'src'),
-      }
+      },
 
-    ]
+    ],
   },
 
   postcss: [

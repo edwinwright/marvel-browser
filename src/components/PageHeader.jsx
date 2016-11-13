@@ -1,17 +1,17 @@
-import './PageHeader.scss';
 import React from 'react';
 import { Link } from 'react-router';
 import GlobalNav from './GlobalNav';
+import './PageHeader.scss';
 
 const PageHeader = () => (
-	<header className="PageHeader">
+  <header className="PageHeader">
     <div className="inner container">
       <Link className="PageHeader__logo" to="/">Marvel API Browser</Link>
       <div className="PageHeader__nav">
         <GlobalNav />
       </div>
     </div>
-	</header>
+  </header>
 );
 
 export default PageHeader;

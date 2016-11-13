@@ -5,22 +5,23 @@ import schemas from '../schemas/marvel';
 export const CHARACTERS_REQUEST = 'CHARACTERS_REQUEST';
 export const CHARACTERS_SUCCESS = 'CHARACTERS_SUCCESS';
 export const CHARACTERS_FAILURE = 'CHARACTERS_FAILURE';
-export const CHARACTER_REQUEST  = 'CHARACTER_REQUEST';
-export const CHARACTER_SUCCESS  = 'CHARACTER_SUCCESS';
-export const CHARACTER_FAILURE  = 'CHARACTER_FAILURE';
+export const CHARACTER_REQUEST = 'CHARACTER_REQUEST';
+export const CHARACTER_SUCCESS = 'CHARACTER_SUCCESS';
+export const CHARACTER_FAILURE = 'CHARACTER_FAILURE';
 
 
 // TODO: move to url utils module
 function serialize(obj) {
   return Object.keys(obj).reduce((a, k) => {
-    a.push(k + '=' + encodeURIComponent(obj[k]));
+    const v = encodeURIComponent(obj[k]);
+    a.push(`${k}=${v}`);
     return a;
   }, []).join('&');
-};
+}
 
 function addQueryParams(url, params) {
-  params = (/\?/.test(url) ? '&' : '?') + serialize(params);
-  return url.replace(/(?=#)|$/, params);
+  const string = (/\?/.test(url) ? '&' : '?') + serialize(params);
+  return url.replace(/(?=#)|$/, string);
 }
 
 
@@ -47,9 +48,9 @@ function fetchCharacters(params) {
         method: 'GET',
       },
       schema: schemas.CHARACTERS,
-    }
+    },
   };
-};
+}
 
 /**
  * An action creator that fetches a page of characters for the given search
@@ -62,7 +63,6 @@ function fetchCharacters(params) {
  */
 export function loadCharacters(nameStartsWith = '', nextPage) {
   return (dispatch, getState) => {
-
     // Get cached pagination data for the query
     const pagination = getState().pagination.charactersByTerm[nameStartsWith] || {};
     const { total = 0, pageCount = 0 } = pagination;
@@ -75,8 +75,8 @@ export function loadCharacters(nameStartsWith = '', nextPage) {
 
     // Define query params
     const queryParams = {
-      offset: pageCount * ITEMS_PER_PAGE
-    }
+      offset: pageCount * ITEMS_PER_PAGE,
+    };
     if (nameStartsWith.length) {
       queryParams.nameStartsWith = nameStartsWith;
     }
@@ -84,7 +84,7 @@ export function loadCharacters(nameStartsWith = '', nextPage) {
     // Dispatch the action
     return dispatch(fetchCharacters(queryParams));
   };
-};
+}
 
 
 // Fetches a single character from the Marvel API.
@@ -92,7 +92,7 @@ export function loadCharacters(nameStartsWith = '', nextPage) {
 function fetchCharacter(id) {
   const endpoint = `${API_ROOT}/${id}`;
   const queryParams = {
-    apikey: MARVEL_API_KEY
+    apikey: MARVEL_API_KEY,
   };
 
   return {
@@ -103,9 +103,9 @@ function fetchCharacter(id) {
         method: 'GET',
       },
       schema: schemas.CHARACTERS,
-    }
-  }
-};
+    },
+  };
+}
 
 /**
  * An action creator that fetches a character for the given id. Exits if the
@@ -116,7 +116,6 @@ function fetchCharacter(id) {
  */
 export function loadCharacter(id) {
   return (dispatch, getState) => {
-
     // Get cached data for the query
     const character = getState().entities.characters[id];
 
@@ -124,6 +123,6 @@ export function loadCharacter(id) {
     if (!character) return null;
 
     // Dispatch the action
-    dispatch(fetchCharacter(id));
-  }
+    return dispatch(fetchCharacter(id));
+  };
 }

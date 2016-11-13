@@ -21,7 +21,7 @@ const contextTypes = {
 class SearchPage extends Component {
   componentWillMount() {
     this.props.loadCharacters(this.props.params.term);
-	}
+  }
 
   handleFormSubmit(term) {
     this.context.router.push(`/search/${term}`);

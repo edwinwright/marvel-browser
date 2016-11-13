@@ -3,7 +3,7 @@ import { Schema, arrayOf } from 'normalizr';
 const options = {
   idAttribute: ({ id, resourceURI }) => {
     return id || resourceURI.substr(resourceURI.lastIndexOf('/') + 1);
-  }
+  },
 };
 
 const character = new Schema('characters', options);
@@ -62,34 +62,34 @@ const story = new Schema('stories', options);
 const schemas = {
   CHARACTERS: {
     data: {
-      results: arrayOf(character)
-    }
+      results: arrayOf(character),
+    },
   },
   COMICS: {
     data: {
-      results: arrayOf(comic)
-    }
+      results: arrayOf(comic),
+    },
   },
   CREATORS: {
     data: {
-      results: arrayOf(creator)
-    }
+      results: arrayOf(creator),
+    },
   },
   EVENTS: {
     data: {
-      results: arrayOf(event)
-    }
+      results: arrayOf(event),
+    },
   },
   SERIES: {
     data: {
-      results: arrayOf(series)
-    }
+      results: arrayOf(series),
+    },
   },
   STORIES: {
     data: {
-      results: arrayOf(story)
-    }
-  }
+      results: arrayOf(story),
+    },
+  },
 };
 
 export default schemas;

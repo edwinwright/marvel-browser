@@ -1,7 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
 
 const propTypes = {
   placeholder: PropTypes.string,
@@ -9,13 +6,10 @@ const propTypes = {
   onFormSubmit: PropTypes.func.isRequired,
 };
 
-
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      term: ''
-    }
+    this.state = { term: '' };
   }
 
   handleInputChange(event) {
@@ -38,11 +32,13 @@ class SearchBar extends Component {
         <input
           placeholder={placeholder}
           value={this.state.term}
-          onChange={(event) => this.handleInputChange(event)} />
+          onChange={event => this.handleInputChange(event)}
+        />
         <button
           type="submit"
           className="button"
-          disabled={isFetching}>
+          disabled={isFetching}
+        >
           Search
         </button>
       </form>

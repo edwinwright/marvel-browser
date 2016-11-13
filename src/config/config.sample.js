@@ -1,1 +1,1 @@
-export const MARVEL_API_KEY = 'MARVEL_API_KEY'
+export const MARVEL_API_KEY = 'MARVEL_API_KEY';

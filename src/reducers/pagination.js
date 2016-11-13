@@ -9,9 +9,9 @@ const pagination = combineReducers({
     types: [
       ActionTypes.CHARACTERS_REQUEST,
       ActionTypes.CHARACTERS_SUCCESS,
-      ActionTypes.CHARACTERS_FAILURE
-    ]
-  })
+      ActionTypes.CHARACTERS_FAILURE,
+    ],
+  }),
 });
 
 export { pagination };

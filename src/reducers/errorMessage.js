@@ -9,4 +9,4 @@ export const errorMessage = (state = null, action) => {
     return action.error;
   }
   return state;
-}
+};

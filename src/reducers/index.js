@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   routing,
   entities,
   pagination,
-  errorMessage
+  errorMessage,
 });
 
 export default rootReducer;

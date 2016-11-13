@@ -1,6 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
+const path = require('path');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
 
 // Remove entry point from webpack config object
 webpackConfig.entry = {};
@@ -14,12 +14,12 @@ webpackConfig.module.preLoaders = [
   {
     test: /^(?!.+\.spec\.js$).+\.js$/,
     include: path.join(__dirname, 'src'),
-    loader: 'isparta'
-  }
+    loader: 'isparta',
+  },
 ];
 
 // Export the module
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // Base path that will be used to resolve all patterns (eg. files, exclude)
@@ -59,8 +59,8 @@ module.exports = function(config) {
         chunks: false,
 
         // Enable / disable child plugin stats
-        children: false
-      }
+        children: false,
+      },
 
     },
 
@@ -80,7 +80,7 @@ module.exports = function(config) {
       suppressFailed: false,
       suppressPassed: false,
       suppressSkipped: true,
-      showSpecTiming: true
+      showSpecTiming: true,
     },
 
     // Reporter config for karma-html-reporter
@@ -93,8 +93,8 @@ module.exports = function(config) {
       includeAllSources: true,
       dir: 'reports/coverage',
       reporters: [
-        {type: 'text-summary'},
-        {type: 'html'},
+        { type: 'text-summary' },
+        { type: 'html' },
       ],
     },
 
@@ -105,7 +105,8 @@ module.exports = function(config) {
     colors: true,
 
     // Level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN ||
+    // config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // Enable / disable watching file and executing tests whenever any file changes

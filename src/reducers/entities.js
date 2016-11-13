@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 
 const INITIAL_STATE = {
-  characters: {}
+  characters: {},
 };
 
 // Updates an entity cache in response to any action with response.entities.
@@ -10,4 +10,4 @@ export const entities = (state = INITIAL_STATE, action) => {
     return merge({}, state, action.response.entities);
   }
   return state;
-}
+};
