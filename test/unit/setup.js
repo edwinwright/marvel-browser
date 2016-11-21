@@ -16,7 +16,7 @@ global.navigator = {
   userAgent: 'node.js',
 };
 
-// Expose the window properties in the global scope
+// Expose window properties in the global scope
 const exposedProperties = ['window', 'navigator', 'document'];
 Object.keys(document.defaultView).forEach((property) => {
   if (typeof global[property] === 'undefined') {
@@ -25,7 +25,8 @@ Object.keys(document.defaultView).forEach((property) => {
   }
 });
 
-// Prevent mocha from interpreting CSS @import files
+// Prevent mocha from interpreting CSS @import files. A basic version of...
+// https://github.com/bkonkle/ignore-styles/blob/master/ignore-styles.js
 function noop() {
   return null;
 }
