@@ -12,4 +12,22 @@ global.document = jsdom.jsdom(DEFAULT_HTML);
 global.window = document.defaultView;
 
 // Allow for things like window.location
-global.navigator = window.navigator;
+global.navigator = {
+  userAgent: 'node.js',
+};
+
+// Expose the window properties in the global scope
+const exposedProperties = ['window', 'navigator', 'document'];
+Object.keys(document.defaultView).forEach((property) => {
+  if (typeof global[property] === 'undefined') {
+    exposedProperties.push(property);
+    global[property] = document.defaultView[property];
+  }
+});
+
+// Prevent mocha from interpreting CSS @import files
+function noop() {
+  return null;
+}
+
+require.extensions['.scss'] = noop;
